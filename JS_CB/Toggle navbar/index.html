@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        position: relative;
+    }
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        background-color: rgb(103, 177, 107);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        height: 48px;
+    }
+    .nav__social-media{
+        display: none;
+        cursor: pointer;
+        padding-right: 32px;
+    }
+    .nav__header {
+        padding: 0 32px;
+        display: flex;
+        justify-content: space-between;
+        color: #333;
+        text-align: center;
+        line-height: 48px;
+    }
+    .nav__menu {
+        display: none;
+        padding-left: 32px;
+        background-color: rgb(103, 177, 107);
+        transition: all linear 1s;
+    }
+    .nav__menu.active {
+        display: block;
+        animation: grow 0.5s linear;
+        transition: all 0.3s linear;
+    }
+    .nav__item {
+        padding: 8px 0;
+        list-style-type: none;
+    }
+    a + a, i + i {
+        margin-left: 8px;
+    }
+    .nav-toggle {
+        cursor: pointer;
+        transition: all ease 0.2s;
+    }
+    .nav-toggle i:hover {
+        transform: rotate(90deg);
+        transition: all linear 0.2s;
+    }
+    @media screen and (min-width: 800px) {
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav__menu, .nav__social-media, .nav__menu.active {
+            display: flex;
+            justify-content: center;
+        }
+        .nav__menu {
+            padding: 4px 32px;
+        }
+        .nav__item {
+            padding: 0 16px;
+        }
+        .nav-toggle {
+            display: none;
+        }
+    }
+    @keyframes grow {
+        from {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+<body>
+    <nav>
+        <div class="nav__header">
+            <h1>Coding Addict</h1>
+            <div class="nav-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <ul class="nav__menu">
+            <li class="nav__item">
+                <a href="#">Home</a>
+            </li>
+            <li class="nav__item">
+                <a href="#">About</a>
+            </li>
+            <li class="nav__item">
+                <a href="#">Projects</a>
+            </li>
+            <li class="nav__item">
+                <a href="#">Contact</a>
+            </li>
+        </ul>
+        <div class="nav__social-media">
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-behance"></i>
+            <i class="fa-brands fa-linkedin"></i>
+            <i class="fa-solid fa-gem"></i>
+        </div>
+    </nav>
+</body>
+<script>
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav__menu');
+    navToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+    })
+</script>
+</html>

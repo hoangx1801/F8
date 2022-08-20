@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        height: 100vh;
+        background-color: #f6f6f6;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    .questions {
+        width: 500px;
+        margin: 10% auto 0;
+    }
+    .question {
+        padding: 24px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        font-size: 20px;
+        transition: all 0.5s linear;
+    }
+    .question + .question {
+        margin-top: 20px;
+    }
+    .questions__title {
+        margin-bottom: 32px;
+        text-align: center;
+        transition: all 0.5s linear;
+    }
+    article {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #999;
+    }
+    .btn {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        transition: all 0.3s linear;
+    }
+    .btn:hover {
+        transform: rotate(90deg);
+        transition: transform 0.3s ease;
+    }
+    .question__text {
+        padding-top: 12px;
+        display: none;
+        transition: all 0.5s linear;
+    }
+    .question__text p {
+        margin-bottom: 0;
+    }
+    .plus-icon,
+    .minus-icon {
+        font-size: 20px;
+    }
+    .active .plus-icon,
+    .minus-icon {
+        display: none;
+    }
+    .active .question__text,
+    .active .minus-icon {
+        display: flex;
+    }
+</style>
+<body>
+    <section class="questions">
+        <div class="questions__title">
+            <h1>General Questions</h1>
+        </div>
+        <div class="question">
+            <article class="question__title">
+                <p>Do you accept all major credit cards?</p>
+                <button class="btn" type="button">
+                    <span class="plus-icon">
+                        <i class="far fa-plus-square"></i>
+                    </span>
+                    <span class="minus-icon">
+                        <i class="far fa-minus-square"></i>
+                    </span>
+                </button>
+            </article>
+            <div class="question__text">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
+        <div class="question">
+            <article class="question__title">
+                <p>Do you accept all major credit cards?</p>
+                <button class="btn" type="button">
+                    <span class="plus-icon">
+                        <i class="far fa-plus-square"></i>
+                    </span>
+                    <span class="minus-icon">
+                        <i class="far fa-minus-square"></i>
+                    </span>
+                </button>
+            </article>
+            <div class="question__text">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
+        <div class="question">
+            <article class="question__title">
+                <p>Do you accept all major credit cards?</p>
+                <button class="btn" type="button">
+                    <span class="plus-icon">
+                        <i class="far fa-plus-square"></i>
+                    </span>
+                    <span class="minus-icon">
+                        <i class="far fa-minus-square"></i>
+                    </span>
+                </button>
+            </article>
+            <div class="question__text">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    const btns = document.querySelectorAll('.btn');
+    //const text = document.querySelector('.');
+    // btns.forEach(function(btn) {
+    //     btn.addEventListener('click', function(e) {
+    //         const question = e.currentTarget.parentElement.parentElement;
+    //         question.classList.toggle('active');
+    //     })
+    // })
+    const questions = document.querySelectorAll('.question');
+    questions.forEach(function(question) {
+        const btn = question.querySelector('.btn');
+        btn.addEventListener('click', function() {
+            questions.forEach(function(item) {
+                if (item != question) {
+                    item.classList.remove('active');
+                }
+            })
+            question.classList.toggle('active');
+        })
+    })
+</script>
+</html>

@@ -1,0 +1,19 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "title": "Javascript",
+      "description": "ABC123"
+    },
+    {
+      "title": "HTML&CSS",
+      "description": "abc13",
+      "id": 2
+    },
+    {
+      "title": "NodeJS",
+      "description": "Thêm khóa mới",
+      "id": 3
+    }
+  ]
+}

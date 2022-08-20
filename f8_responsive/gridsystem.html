@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./grid.css">
+    <title>Grid system</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+        font-family: monospace;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .course-item {
+        background-color: orange;
+        height: 260px;
+    }
+
+    h1 {
+        color: #fff;
+        font-size: 30px;
+        line-height: 260px;
+        margin: 0;
+    }
+</style>
+
+<!-- Column: .col
+Prefix class
+    - c - mobile
+    - m - tablet
+    - l - pc 
+    - o - offset
+-->
+
+<body>
+    <div class="grid wide container">
+        <div class="row no-gutters">
+            <div class="col l-4 m-4 c-6">
+                <div class="course-item">
+                    <h1>Course 1</h1>
+                </div>
+            </div>
+            <div class="col l-4 m-4 c-6">
+                <div class="course-item">
+                    <h1>Course 1</h1>
+                </div>
+            </div>
+            <div class="col l-4 m-4 c-6">
+                <div class="course-item">
+                    <h1>Course 1</h1>
+                </div>
+            </div>
+            <div class="col l-4 m-4 c-6">
+                <div class="course-item">
+                    <h1>Course 1</h1>
+                </div>
+            </div>
+            <div class="col l-4 m-4 c-6">
+                <div class="course-item">
+                    <h1>Course 1</h1>
+                </div>
+            </div>
+            <div class="col l-4 m-4 c-6">
+                <div class="course-item">
+                    <h1>Course 1</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

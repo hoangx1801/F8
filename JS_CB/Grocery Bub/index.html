@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        background-color: aliceblue;
+    }
+    .container {
+        text-align: center;
+        margin-top: 5%;
+        background-color: #fff;
+        border-radius: 12px;
+        max-width: 500px;
+        width: 500px;
+        box-shadow: 0 0 10px rgba(28, 78, 103, 0.3);
+        padding: 32px;
+    }
+    form h3 {
+        display: flex;
+        justify-content: center;
+        color: rgb(28, 78, 103);
+        letter-spacing: 4px;
+    }
+    .form-control {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(233, 232, 232);
+        overflow: hidden;
+        border-radius: 12px;
+        margin: 24px 0 12px;
+    }
+    input {
+        padding: 8px 16px;
+        outline: none;
+        border: none;
+        background-color: transparent;
+        width: 100%;
+    }
+    .submitStn {
+        width: 150px;
+        background-color: rgb(149, 204, 232);
+        outline: none;
+        border: none;
+        padding: 8px 0;
+    }
+    .grocery__list {
+        margin: 24px 0 12px;
+        display: none;
+    }
+    .grocery__list.show, .clearBtn.show {
+        display: block;
+    }
+    .grocery__item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 16px;
+        border-radius: 12px;
+    }
+    i, button {
+        cursor: pointer;
+    }
+    .deleteBtn {
+        color: rgb(249, 95, 95);
+        margin-left: 8px;
+    }
+    .clearBtn {
+        outline: none;
+        background-color: transparent;
+        border: none;
+        color:rgb(249, 95, 95);
+        font-weight: 700;
+        text-align: center;
+        display: none;
+        width: 100%;
+    }
+    .alterBtn {
+        color: rgb(95, 249, 141);
+    }
+    .grocery__item:hover {
+        background-color: rgb(246, 246, 246);
+    }
+    .alert {
+        text-align: left;
+        margin-left: 8px;
+        font-size: 14px;
+        font-weight: 100;
+    }
+    .alert.danger {
+        color: rgb(249, 95, 95);
+    }
+    .alert.success {
+        color: rgb(95, 249, 141);
+    }
+    @keyframes fadeIn {
+        50% {
+            opacity: 50;
+        }
+        100% {
+            opacity: 100;
+        }
+    }
+</style>
+<body>
+    <div class="container">
+        <form action="" class="form">
+            <h3>Grocery Bub</h3>
+            <div class="form-control">
+                <input type="text" id="grocery__input" placeholder="e.g. eggs">
+                <button type="submit" class="submitStn">Submit</button>
+            </div>
+            <p class="alert"></p>
+        </form>
+        <div class="grocery__list show">
+        </div>
+        <button class="clearBtn">Clear all items</button>
+    </div>
+</body>
+<script>
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
+    // ****** Select items ****** //
+    const form = $('form');
+    const submitBtn = $('.submitStn');
+    const input = $('#grocery__input');
+    const list = $('.grocery__list');
+    const alertText = $('.alert');
+    const clearBtn = $('.clearBtn');
+    // ****** Event listener ****** //
+    //create item
+    form.addEventListener('submit', addItem);
+    //clear items
+    clearBtn.addEventListener('click', clearItems);
+    //load items
+    window.addEventListener('DOMContentLoaded', setupList)
+
+    // edit options
+    let editElement;
+    let editFlag = false;
+    let editID = "";
+
+    // ****** Function ****** //
+    function addItem(e) {
+        e.preventDefault();
+
+        const value = input.value.trim();
+        const id = new Date().getTime().toString();
+
+        if (value && !editFlag) {
+            createListItems(id, value);
+            
+            displayAlert("Item added to the list", "success");
+            clearBtn.classList.add('show');
+
+            addToLocalStorage(id, value);
+
+            setBackToDefault();
+        } else if (value && editFlag) {
+            editElement.innerHTML = value;
+
+            displayAlert('Item changed', 'success');
+            addToLocalStorage(id, value);
+            editLocalStorage(editID, value);
+
+            setBackToDefault();
+        } else {
+            displayAlert("Please enter item", "danger");
+        }
+    }
+    
+    function displayAlert(text, action) {
+        alertText.textContent = text;
+        alertText.classList.add(action);
+        alertText.style.animation = `fadeIn ease 5s`
+        // remove alert
+        setTimeout(function() {
+            alertText.textContent = '';
+            alertText.classList.remove(action);
+        }, 1000);
+    }
+
+    function setBackToDefault() {
+        editFlag = false;
+        editID = "";
+        input.value = '';
+        submitBtn.textContent = "Submit";
+    }
+
+    function clearItems() {
+        const items = $$('.grocery__item');
+        if (items.length > 0) {
+            items.forEach(function(item) {
+                list.removeChild(item);
+            })
+        }
+        clearBtn.classList.remove('show');
+
+        displayAlert("Empty list", "danger");
+        
+        localStorage.removeItem("list");
+    }
+
+    function deleteItem(e) {
+        const element = e.currentTarget.parentElement.parentElement;
+        const id = element.dataset.id;
+
+        list.removeChild(element);
+
+        displayAlert("Item removed", "danger");
+        setBackToDefault();
+
+        removeFromLocalStorage(id);
+    }
+
+    function editItem(e) {
+        const element = e.currentTarget.parentElement.parentElement;
+        editElement = e.currentTarget.parentElement.previousElementSibling;
+        console.log(editElement)
+        input.value = editElement.innerHTML;
+        editFlag = true;
+        editID = element.dataset.id;
+        submitBtn.textContent = 'Edit';
+    }
+
+    // ****** Local storage ****** //
+    function getLocalStorage() {
+        return localStorage.getItem("list") ? JSON.parse(localStorage.getItem("list")) : [];
+    }
+
+    function addToLocalStorage(id, value) {
+        const grocery = {id, value};
+        // if there is none, assign an empty array to push items
+        let items = getLocalStorage();
+        items.push(grocery);
+
+        localStorage.setItem("list", JSON.stringify(items));
+    }
+    
+    function removeFromLocalStorage(id) {
+        let items = getLocalStorage();
+        items = items.filter(function(item) {
+            if (item.id !== id) {
+                return item;
+            }
+        })
+        localStorage.setItem("list", JSON.stringify(items));
+    }
+
+    function editLocalStorage(id, value) {
+        let items = getLocalStorage();
+        items = items.map(function(item) {
+            if (item.id == id) {
+                item.value = value;
+            }
+            return item;
+        })
+        localStorage.setItem("list", JSON.stringify(items));
+    }
+    // ****** Set up ****** //
+    function setupList() {
+        let items = getLocalStorage();
+
+        if (items.length > 0) {
+            items.forEach(function (item) {
+                createListItems(item.id, item.value);
+            });
+        }
+        clearBtn.classList.add('show');
+    }
+
+    function createListItems(id, value) {
+        // create item
+        const elementItem = document.createElement('div');
+        elementItem.classList.add('grocery__item');
+        // add id
+        const IDItem = document.createAttribute('data-id');
+        IDItem.value = id;
+        elementItem.setAttributeNode(IDItem);
+        
+        elementItem.innerHTML = `
+            <p class="item__name">${value}</p>
+            <div class="grocery__btn">
+                <i class="alterBtn fa-solid fa-pen-to-square"></i>
+                <i class="deleteBtn fa-solid fa-trash-can"></i>
+                <p class="clearBtn"></p>
+            </div>
+        `
+        list.appendChild(elementItem);
+
+        const deleteBtn = $('.deleteBtn');
+        deleteBtn.addEventListener('click', deleteItem);
+        const alterBtn = $('.alterBtn');
+        alterBtn.addEventListener('click', editItem);
+    }
+</script>
+</html>

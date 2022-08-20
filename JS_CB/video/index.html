@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .preload {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        visibility: visible;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        background-color: #fff;
+    }
+    .preload.hide {
+        visibility: hidden;
+        z-index: -999;
+    }
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+    }
+    section {
+        display: grid;
+        place-items: center;
+        height: 100vh;
+    }
+    section::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+    h1 {
+        color: #fff;
+        font-size: 80px;
+    }
+    button {
+        position: absolute;
+        bottom: 52px;
+        left: 52px;
+        height: 40px;
+        width: 130px;
+        border-radius: 12px;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-around;
+        border: none;
+        align-items: center;
+    }
+    span {
+        display: inline-block;
+    }
+    .switch {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        border-radius: 12px;
+        transition: all linear 0.3s;
+        margin: 0;
+        display: block;
+        background-color: rgb(71, 197, 77);
+    }
+    .slide .switch {
+        left: 50%;
+    }
+</style>
+<body>
+    <div class="preload">
+        <img src="https://raw.githubusercontent.com/john-smilga/javascript-basic-projects/master/09-video/final/preloader.gif"></img>
+    </div>
+    <section>
+        <h1>Video</h1>
+        <video controls muted autoplay loop class="video-container">
+            <source src="./videoplayback.mp4">
+        </video>
+    </section>
+    <button class="switch-btn slide">
+        <span>Play</span>
+        <span>Pause</span>
+        <span class="switch"></span>
+    </button>
+</body>
+<script>
+    const $ = document.querySelector.bind(document);
+    const btn = $('.switch-btn');
+    const video = $('.video-container');
+    const preload = $('.preload');
+
+    btn.addEventListener('click', function() {
+        if (!btn.classList.contains('slide')) {
+            btn.classList.add('slide');
+            video.pause();
+        } else {
+            btn.classList.remove('slide');
+            video.play();
+        }
+    })
+
+    window.addEventListener('load', function() {
+        preload.classList.add('hide');
+    })
+</script>
+</html>

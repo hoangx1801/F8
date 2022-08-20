@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./main.css">
+    <script src="./lib.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="toast"></div>
+    <div class="toast__btn">
+        <button onclick="showSuccess();" class="btn btn--success">Show success toast</button>
+        <button onclick="showError();" class="btn btn--error">Show error toast</button>
+    </div>
+    <script>
+        function showSuccess() {
+            toast({
+                title: "Success!",
+                message: "Anyone with access can view your invited visitors.",
+                type: "success",
+                duration: 3000
+            });
+        };
+        function showError() {
+            toast({
+                title: "Error!",
+                message: "Anyone with access can view your invited visitors.",
+                type: "error",
+                duration: 3000
+            });
+        };
+    </script>
+</body>
+</html>

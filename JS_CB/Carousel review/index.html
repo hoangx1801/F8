@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        padding: 40px;
+    }
+    hr {
+        height: 6px;
+        width: 60px;
+        background-color: rgb(0, 106, 255);
+        border: none;
+        margin: 12px auto 36px;
+    }
+    .review {
+        border-radius: 8px;
+        height: 70vh;
+        width: 100vh;
+        box-shadow: 0 0 10px rgba(0, 106, 255, 0.2);
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 32px;
+    }
+
+    .review__img {
+        border-color: rgb(0, 106, 255);
+        border-radius: 50%;
+        height: 120px;
+        width: 120px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    
+    img {
+        width: 100%;
+    }
+
+    .review__job {
+        margin: 20px 0;
+        color: rgb(0, 106, 255);
+        font-weight: 400;
+    }
+
+    .review__content {
+        color: #333;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .review__icon {
+        margin: 30px 0;
+        font-size: 16px;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    i {
+        background-color: rgba(0, 106, 255,0.1);
+        border-radius: 50%;
+        padding: 8px 12px;
+    }
+
+    .review__btn {
+        border: none;
+        border-radius: 50px;
+        background-color: rgb(0, 106, 255);
+        padding: 12px 24px;
+        font-size: 12px;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    
+    .review__icon:hover, .review__btn:hover {
+        opacity: 0.8;
+    }
+
+</style>
+<body>
+    <main id="review">
+        <h1>Our Reviews</h1>
+        <hr>
+        <div class="review">
+            <div class="review__img">
+                <img src="./craig-mckay-jmURdhtm7Ng-unsplash.jpg" id="img"  alt="">
+            </div>
+            <h3 class="review__name">Matt Smith</h3>
+            <h4 class="review__job">Web Developer</h4>
+            <p class="review__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <div class="review__icon">
+                <i class="fa-solid fa-chevron-left prevbtn"></i>
+                <i class="fa-solid fa-chevron-right nextbtn"></i>
+            </div>
+            <button class="review__btn">Surprise Me</button>
+        </div>
+    </main>
+    <script>
+        const reviews = [
+            {
+                id: 1,
+                name: "Alex Smith",
+                job: "UX/UI Designer",
+                img: "https://shorturl.ae/S9u40",
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            },
+            {
+                id: 2,
+                name: "Susan Lee",
+                job: "UX/UI Designer",
+                img: "https://shorturl.ae/ijYXo",
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            },
+            {
+                id: 3,
+                name: "Matt Well",
+                job: "UX/UI Designer",
+                img: "https://shorturl.ae/rWSsv",
+                content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            }
+        ]
+        let currentItem = 0;
+        const img = document.querySelector('#img');
+        const name = document.querySelector('.review__name');
+        const job = document.querySelector('.review__job');
+        const content = document.querySelector('.review__content');
+
+        const randBtn = document.querySelector('.review__btn');
+        const prevBtn = document.querySelector('.prevbtn');
+        const nextBtn = document.querySelector('.nextbtn');
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            ShowReview(currentItem);
+        })
+
+        prevBtn.addEventListener('click', function() {
+            currentItem--;
+            if (currentItem < 0) {
+                currentItem = reviews.length - 1;
+            }
+            ShowReview(currentItem);
+        })
+
+        nextBtn.addEventListener('click', function() {
+            currentItem++;
+            if (currentItem > reviews.length -  1) {
+                currentItem = 0;
+            }
+            ShowReview(currentItem);
+        })
+
+        randBtn.addEventListener('click', function() {
+            currentItem = Math.floor(Math.random() * reviews.length);
+            ShowReview(currentItem);
+        })
+
+        function ShowReview(currentItem) {
+            img.src = reviews[currentItem].img;
+            name.textContent = reviews[currentItem].name;
+            job.textContent = reviews[currentItem].job;
+            content.textContent = reviews[currentItem].content;
+        }
+    </script>
+</body>
+</html>
